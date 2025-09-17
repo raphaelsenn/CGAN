@@ -2,13 +2,16 @@
 This code implements the fully connected generator and discriminator for the MNIST dataset as described in Mirza and Osindero (2014), ["Conditional Generative Adversarial Networks"](https://arxiv.org/abs/1406.2661).
 
 ![gan_objective](./assets/gan_objective.png)
-*Figure 1: The original GAN objective, where G denotes the generator and D the discriminator (Goodfellow et al., 2014).*
+
+*Equation 1: The original GAN objective, where G denotes the generator and D the discriminator (Goodfellow et al., 2014).*
 
 ![cgan_objective](./assets/cgan_objective.png)
-*Figure 2: The CGAN objective, where G denotes the generator and D the discriminator (Mirza and Osindero, 2014).*
+
+*Equation 2: The CGAN objective, where G denotes the generator and D the discriminator (Mirza and Osindero, 2014).*
 
 ![cgan_architecture](./assets/cgan_architecture.png)
-*Figure 2: Illustrating the CGAN structure (Mirza and Osindero, 2014).*
+
+*Figure 1: Illustrating the CGAN structure (Mirza and Osindero, 2014).*
 
 ## MNIST (fully-connected model)
 
