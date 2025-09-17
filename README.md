@@ -31,7 +31,7 @@ Discriminator:
 * Generator learning rate: 0.0002  
 * Discriminator learning rate: 0.0002  
 * Generator betas: (0.5, 0.999)  
-* Discriminator betas: (0.5, 0.909)  
+* Discriminator betas: (0.5, 0.999)  
 
 #### Training Data:
 ![MNIST_Training_Data](./assets/mnist_train.png)

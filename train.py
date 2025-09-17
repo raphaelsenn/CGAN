@@ -3,6 +3,7 @@ Author: Raphael Senn <raphaelsenn@gmx.de>
 """
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 
@@ -38,14 +39,15 @@ def train(
     for epoch in range(epochs):
 
         total_loss_g, total_loss_d = 0.0, 0.0
-        for x, _ in dataloader:
+        for x, y in dataloader:
             # --- Sampling: x ~ p_data, z ~ p_noise ---
             x = x.to(device)
+            y = F.one_hot(y.to(device), num_classes=10).float()
             z = torch.rand(size=(x.shape[0], DIM_NOISE), device=device) * 2 - 1
 
             # --- Train Discriminator ---
-            D_x = discriminator(x)
-            D_G_z = discriminator(generator(z))
+            D_x = discriminator(x, y)
+            D_G_z = discriminator(generator(z, y), y)
             optimizer_d.zero_grad()
             loss_d = criterion_d(D_x, D_G_z)
             loss_d.backward()
@@ -55,7 +57,7 @@ def train(
             z = torch.rand(size=(x.shape[0], DIM_NOISE), device=device) * 2 - 1
             
             # --- Train Generator ---
-            D_G_z = discriminator(generator(z))
+            D_G_z = discriminator(generator(z, y), y)
             optimizer_g.zero_grad()
             loss_g = criterion_g(D_G_z)
             loss_g.backward()
@@ -82,8 +84,8 @@ if __name__ == "__main__":
     SHUFFLE = True
     LR_G = 0.002
     LR_D = 0.002
-    BETAS_G = (0.5, 0.99)
-    BETAS_D = (0.5, 0.99) 
+    BETAS_G = (0.5, 0.999)
+    BETAS_D = (0.5, 0.990) 
     ROOT_DIR_MNIST = "./MNIST"
 
     # --- Loading the Dataset ---
